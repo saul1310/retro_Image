@@ -52,11 +52,17 @@ def color_averager(img_array,new_array):
         # img_array[0][0][1] accesses the green channel value of the first pixel in the first row.
         # img_array[0][0][2] accesses the blue channel value of the first pixel in the first row.
 
+    avg_red= 0
+    avg_green= 0
+    avg_blue= 0
 
 
+    for i in range(old_array_len):
+        for j in range(len(img_array[0])):
+            for k in range(3):
+                print(img_array[i][j][k])
 
-    # for i in range(old_array_len):
-    #     for j in range(3):
+
             
 
 
