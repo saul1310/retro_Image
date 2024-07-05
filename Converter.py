@@ -12,31 +12,50 @@ new_array_len = 0
 
 
 def image_to_array(image_path):
+    """ takes in the path to the image and returns its array"""
+    """ Each cell contains three numbers representing rgb values"""
+
   
     with Image.open(image_path) as img:
       
         img_array = np.array(img)
         global new_array_len
         new_array_len = len(img_array) //2
-    # return img_array
-    print(len(img_array))
+        print(img_array[0][0][1])
+    
 
 
 def create_new_array():
-     #we now need to create a new array that is half as big before its converted back to an image
+     """ creates a new array full of zeros that is 1/2 the size of the origional array     """
+     """" takes in no input, uses global new_array_len int   """
+     """returns the new array"""
+    
      global new_array_len
      new_array = [[]]
      for i in range(new_array_len):
-         new_array.append([0])
-     print(new_array_len)
+         new_array.append([255,226,227])
+     return new_array
+  
+def color_averager(img_array,new_array):
+    """ examines origional array, find average color for group of two pixels, and then assigns it to the new array"""   
 
+    # Problem im having right now is that the value for rgb is not comma seperated, making it hard to average each of three values 
+
+    # wh
+
+        
+        
 
 def array_to_image(array):
     # Convert a numpy array back to an image
     return Image.fromarray(array)
+
+
+
+
 def main():
-    image_to_array(image_path)
-    create_new_array()
+  image_to_array(image_path)
+  print(new_array_len)
 
     
     
