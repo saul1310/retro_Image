@@ -39,10 +39,9 @@ def create_new_array():
 def color_averager(img_array,new_array):
     """ examines origional array, find average color for group of two pixels, and then assigns it to the new array"""   
 
-    # Problem im having right now is that the value for rgb is not comma seperated, making it hard to average each of three values 
+    #  TIP -->to change a specific r g or b  value use a third index ie to access the blue value for a pixel use array[0][0][2] = 220
 
-    # wh
-
+  
         
         
 
