@@ -6,6 +6,7 @@ import os
 script_dir = os.path.dirname(__file__)
 # Define the relative path to the image
 image_path = os.path.join(script_dir, 'Example.jpg')
+new_array_len = 0
 
 
 
@@ -15,29 +16,34 @@ def image_to_array(image_path):
     with Image.open(image_path) as img:
       
         img_array = np.array(img)
-    return img_array
+        global new_array_len
+        new_array_len = len(img_array) //2
+    # return img_array
+    print(len(img_array))
+
+
+def create_new_array():
+     #we now need to create a new array that is half as big before its converted back to an image
+     global new_array_len
+     new_array = [[]]
+     for i in range(new_array_len):
+         new_array.append([0])
+     print(new_array_len)
+
 
 def array_to_image(array):
     # Convert a numpy array back to an image
     return Image.fromarray(array)
-
 def main():
- 
-    img_array = image_to_array(image_path)
-    copied_array = img_array.copy()
-    # at this point we have a copy of the array, we now need to reduce its size to a quarter before its converted back to an image
-    
-    
-    # this functionality will iterate through every cell in the 2d matrix
-    for i in range(len(copied_array)):
-        for j in range(len(copied_array[0])):
+    image_to_array(image_path)
+    create_new_array()
 
     
     
     
     
-    new_image = array_to_image(copied_array)
-    new_image.show()
+    # new_image = array_to_image(copied_array)
+    # new_image.show()
 
   
 
