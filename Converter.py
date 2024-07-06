@@ -40,12 +40,11 @@ def create_new_array():
          new_array.append([255,226,227])
      return new_array
   
-def color_averager(img_array,new_array):
-    
+def color_averager(img_array):
+    """ examines original array, find average color for group of two pixels, and then assigns it to the new array"""   
 
-    """ examines origional array, find average color for group of two pixels, and then assigns it to the new array"""   
-
-    #  TIP -->to change a specific r g or b  value use a third index ie to access the blue value for a pixel use array[0][0][2] = 220
+    #  GUIDE FOR INDEXING IN MATRIX --> 
+    #   to change a specific r g or b  value use a third index ie to access the blue value for a pixel use array[0][0][2] = 220
         # img_array[0] accesses the first row of pixels in the image.
         # img_array[0][0] accesses the first pixel in the first row.
         # img_array[0][0][0] accesses the red channel value of the first pixel in the first row.
@@ -73,15 +72,17 @@ def color_averager(img_array,new_array):
         
 
 def array_to_image(array):
-    # Convert a numpy array back to an image
+    """Convert a numpy array back to an image"""
+    """returns new Image stored as JPG"""
     return Image.fromarray(array)
 
 
 
 
 def main():
-  image_to_array(image_path)
-  print(new_array_len)
+  img_array = image_to_array(image_path)
+  color_averager(img_array)
+
 
     
     
