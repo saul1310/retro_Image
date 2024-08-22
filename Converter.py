@@ -2,97 +2,50 @@ from PIL import Image
 import numpy as np
 import os
 
+# Disable the decompression bomb warning
+Image.MAX_IMAGE_PIXELS = None
+
 # Get the current directory of the script
 script_dir = os.path.dirname(__file__)
-# Define the relative path to the image
+
 image_path = os.path.join(script_dir, 'Example.jpg')
-new_array_len = 0
-old_array_len = 0 
-
-
-
-
 
 def image_to_array(image_path):
-    """ takes in the path to the image and returns its array"""
-    """ Each cell contains three numbers representing rgb values"""
-
-  
+    """Takes in the path to the image and returns its array"""
     with Image.open(image_path) as img:
-      
         img_array = np.array(img)
-        global new_array_len
-        global old_array_len
-        old_array_len = len(img_array)
-        new_array_len = len(img_array) //2
-        print(img_array)
-    
+        print(f"Original image array shape: {img_array.shape}")
+        return img_array
 
+def create_new_array(old_array):
+    """Creates a new array with half the dimensions of the original array"""
+    old_height, old_width, _ = old_array.shape
+    new_height, new_width = old_height // 2, old_width // 2
+    new_array = np.zeros((new_height, new_width, 3), dtype=np.uint8)
+    print(f"New image array shape: {new_array.shape}")
+    return new_array
 
-def create_new_array():
-     """ creates a new array full of zeros that is 1/2 the size of the origional array     """
-     """" takes in no input, uses global new_array_len int   """
-     """returns the new array"""
-    
-     global new_array_len
-     new_array = [[]]
-     for i in range(new_array_len):
-         new_array.append([255,226,227])
-     return new_array
-  
-def color_averager(img_array):
-    """ examines original array, find average color for group of two pixels, and then assigns it to the new array"""   
+def color_averager(old_array, new_array):
+    """Finds the average color for groups of four pixels and assigns it to the new array"""
+    for i in range(0, old_array.shape[0], 2):
+        for j in range(0, old_array.shape[1], 2):
+            avg_color = np.mean(old_array[i:i+2, j:j+2], axis=(0, 1))
+            new_array[i//2, j//2] = avg_color.astype(np.uint8)
+    return new_array
 
-    #  GUIDE FOR INDEXING IN MATRIX --> 
-    #   to change a specific r g or b  value use a third index ie to access the blue value for a pixel use array[0][0][2] = 220
-        # img_array[0] accesses the first row of pixels in the image.
-        # img_array[0][0] accesses the first pixel in the first row.
-        # img_array[0][0][0] accesses the red channel value of the first pixel in the first row.
-        # img_array[0][0][1] accesses the green channel value of the first pixel in the first row.
-        # img_array[0][0][2] accesses the blue channel value of the first pixel in the first row.
-
-    avg_red= 0
-    avg_green= 0
-    avg_blue= 0
-
-
-    for i in range(old_array_len):
-        for j in range(len(img_array[0])):
-            for k in range(3):
-                print(img_array[i][j][k])
-
-
-            
-
-
-
-
-  
-        
-        
-
-def array_to_image(array):
-    """Convert a numpy array back to an image"""
-    """returns new Image stored as JPG"""
-    return Image.fromarray(array)
-
-
-
+def array_to_image(array, output_path):
+    """Convert a numpy array back to an image and save it"""
+    img = Image.fromarray(array)
+    img.save(output_path)
+    print(f"Image saved to {output_path}")
 
 def main():
-  img_array = image_to_array(image_path)
-  color_averager(img_array)
+    img_array = image_to_array(image_path)
+    new_array = create_new_array(img_array)
+    reduced_img_array = color_averager(img_array, new_array)
 
-
-    
-    
-    
-    
-    # new_image = array_to_image(copied_array)
-    # new_image.show()
-
-  
+    output_path = os.path.join(script_dir, 'Reduced_Image.jpg')
+    array_to_image(reduced_img_array, output_path)
 
 if __name__ == '__main__':
-     main()
-
+    main()
