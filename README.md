@@ -6,3 +6,4 @@ maybe to test there could be a website that runs the algorithim and someone can 
 
 
 The base code for this is done. 
+The next step will be to have this refresh every second and return the image 
